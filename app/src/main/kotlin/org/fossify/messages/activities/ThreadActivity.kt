@@ -310,6 +310,7 @@ class ThreadActivity : SimpleActivity() {
         val bottomBarColor = getBottomBarColor()
         binding.messageHolder.root.setBackgroundColor(bottomBarColor)
         binding.shortCodeHolder.root.setBackgroundColor(bottomBarColor)
+        binding.messageHolder.threadTypeMessage.background = org.fossify.messages.helpers.PulseThemeHelper.createComposerPillDrawable(this)
     }
 
     override fun onPause() {

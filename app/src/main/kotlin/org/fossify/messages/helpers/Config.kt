@@ -151,4 +151,17 @@ class Config(context: Context) : BaseConfig(context) {
         get() = prefs.getBoolean(KEEP_CONVERSATIONS_ARCHIVED, false)
         set(keepConversationsArchived) = prefs.edit()
             .putBoolean(KEEP_CONVERSATIONS_ARCHIVED, keepConversationsArchived).apply()
+
+    var pulseThemeInitialized: Boolean
+        get() = prefs.getBoolean("pulse_theme_initialized", false)
+        set(value) = prefs.edit().putBoolean("pulse_theme_initialized", value).apply()
+
+    fun initPulseThemeDefaults(primary: Int, accent: Int) {
+        primaryColor = primary
+        accentColor = accent
+        prefs.edit()
+            .putBoolean("is_using_system_theme", false)
+            .putBoolean("is_using_auto_theme", true)
+            .apply()
+    }
 }

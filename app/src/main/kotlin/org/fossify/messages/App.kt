@@ -5,10 +5,13 @@ import android.net.Uri
 import android.os.Handler
 import android.os.Looper
 import android.provider.ContactsContract
+import androidx.core.content.ContextCompat
+import com.google.android.gms.ads.MobileAds
 import org.fossify.commons.FossifyApp
 import org.fossify.commons.extensions.hasPermission
 import org.fossify.commons.helpers.PERMISSION_READ_CONTACTS
 import org.fossify.commons.helpers.ensureBackgroundThread
+import org.fossify.messages.extensions.config
 import org.fossify.messages.extensions.rescheduleAllScheduledMessages
 import org.fossify.messages.helpers.MessagingCache
 
@@ -17,6 +20,8 @@ class App : FossifyApp() {
 
     override fun onCreate() {
         super.onCreate()
+        applyDefaultPulseTheme()
+
         if (hasPermission(PERMISSION_READ_CONTACTS)) {
             listOf(
                 ContactsContract.Contacts.CONTENT_URI,
@@ -31,7 +36,18 @@ class App : FossifyApp() {
         }
 
         ensureBackgroundThread {
+            MobileAds.initialize(this) {}
             rescheduleAllScheduledMessages()
+        }
+    }
+
+    private fun applyDefaultPulseTheme() {
+        if (!config.pulseThemeInitialized) {
+            config.initPulseThemeDefaults(
+                primary = ContextCompat.getColor(this, R.color.color_primary),
+                accent = ContextCompat.getColor(this, R.color.color_accent)
+            )
+            config.pulseThemeInitialized = true
         }
     }
 

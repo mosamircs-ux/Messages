@@ -25,7 +25,7 @@ fun hasSigningVars(): Boolean {
 
 base {
     val versionCode = project.property("VERSION_CODE").toString().toInt()
-    archivesName = "messages-$versionCode"
+    archivesName = "pulsesms-$versionCode"
 }
 
 android {
@@ -70,10 +70,22 @@ android {
     buildTypes {
         debug {
             applicationIdSuffix = ".debug"
+            manifestPlaceholders["admobAppId"] = "ca-app-pub-3940256099942544~3347511713"
+            buildConfigField(
+                "String",
+                "ADMOB_BANNER_UNIT_ID",
+                "\"ca-app-pub-3940256099942544/9214589741\""
+            )
         }
         release {
             isMinifyEnabled = true
             isShrinkResources = true
+            manifestPlaceholders["admobAppId"] = project.property("ADMOB_APP_ID").toString()
+            buildConfigField(
+                "String",
+                "ADMOB_BANNER_UNIT_ID",
+                "\"${project.property("ADMOB_BANNER_UNIT_ID")}\""
+            )
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -115,7 +127,7 @@ android {
         )
     }
 
-    namespace = project.property("APP_ID").toString()
+    namespace = "org.fossify.messages"
 
     lint {
         checkReleaseBuilds = false
@@ -150,6 +162,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.process)
     implementation(libs.ez.vcard)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.play.services.ads)
     implementation(libs.bundles.room)
     ksp(libs.androidx.room.compiler)
     detektPlugins(libs.compose.detekt)

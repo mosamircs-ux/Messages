@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- PulseSMS Ocean Indigo AMOLED Dark Palette -->
+    <color name="color_primary">#3B82F6</color>
+    <color name="color_primary_dark">#0B1120</color>
+    <color name="color_accent">#6366F1</color>
+
+    <color name="pulse_card_surface_light">#111827</color>
+    <color name="pulse_card_stroke_light">#1E293B</color>
+    <color name="pulse_bubble_received_light">#1E293B</color>
+    <color name="pulse_composer_bg_light">#162033</color>
+    <color name="pulse_composer_stroke_light">#2B3B59</color>
+
+    <color name="pulse_banner_divider">#333B82F6</color>
+</resources>

@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- PulseSMS Ocean Indigo Brand Palette -->
+    <color name="color_primary">#2563EB</color>
+    <color name="color_primary_dark">#1E3A8A</color>
+    <color name="color_accent">#4F46E5</color>
 
+    <color name="pulse_indigo_deep">#1E3A8A</color>
+    <color name="pulse_indigo_primary">#2563EB</color>
+    <color name="pulse_indigo_bright">#3B82F6</color>
+    <color name="pulse_indigo_accent">#4F46E5</color>
+
+    <color name="pulse_card_surface_light">#F8FAFF</color>
+    <color name="pulse_card_stroke_light">#DCE6FF</color>
+    <color name="pulse_bubble_received_light">#EEF2FF</color>
+    <color name="pulse_composer_bg_light">#EFF4FF</color>
+    <color name="pulse_composer_stroke_light">#C7D8FE</color>
+
+    <color name="pulse_banner_divider">#262563EB</color>
 </resources>

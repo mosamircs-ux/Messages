@@ -63,6 +63,7 @@ import org.fossify.messages.extensions.getConversations
 import org.fossify.messages.extensions.getMessages
 import org.fossify.messages.extensions.insertOrUpdateConversation
 import org.fossify.messages.extensions.messagesDB
+import org.fossify.messages.helpers.AdBannerHelper
 import org.fossify.messages.helpers.SEARCHED_MESSAGE_ID
 import org.fossify.messages.helpers.THREAD_ID
 import org.fossify.messages.helpers.THREAD_TITLE
@@ -83,6 +84,7 @@ class MainActivity : SimpleActivity() {
     private var storedFontSize = 0
     private var lastSearchedText = ""
     private var bus: EventBus? = null
+    private var adBannerHelper: AdBannerHelper? = null
 
     private val binding by viewBinding(ActivityMainBinding::inflate)
 
@@ -90,24 +92,26 @@ class MainActivity : SimpleActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        appLaunched(BuildConfig.APPLICATION_ID)
         setupOptionsMenu()
         refreshMenuItems()
 
-        setupEdgeToEdge(padBottomImeAndSystem = listOf(binding.conversationsList))
+        setupEdgeToEdge(padBottomImeAndSystem = listOf(binding.pulseMainContentContainer))
+
+        adBannerHelper = AdBannerHelper(
+            activity = this,
+            wrapperView = binding.adBannerWrapper,
+            container = binding.adBannerContainer
+        ).also { it.load() }
 
         checkAndDeleteOldRecycleBinMessages()
         clearAllMessagesIfNeeded {
             loadMessages()
         }
-
-        if (checkAppSideloading()) {
-            return
-        }
     }
 
     override fun onResume() {
         super.onResume()
+        adBannerHelper?.onResume()
         updateMenuColors()
         refreshMenuItems()
 
@@ -137,11 +141,14 @@ class MainActivity : SimpleActivity() {
 
     override fun onPause() {
         super.onPause()
+        adBannerHelper?.onPause()
         storeStateVariables()
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        adBannerHelper?.onDestroy()
+        adBannerHelper = null
         bus?.unregister(this)
     }
 
@@ -631,6 +638,10 @@ class MainActivity : SimpleActivity() {
 
         val faqItems = arrayListOf(
             FAQItem(
+                title = R.string.faq_1_title,
+                text = R.string.faq_1_text
+            ),
+            FAQItem(
                 title = R.string.faq_2_title,
                 text = R.string.faq_2_text
             ),
@@ -641,27 +652,8 @@ class MainActivity : SimpleActivity() {
             FAQItem(
                 title = R.string.faq_4_title,
                 text = R.string.faq_4_text
-            ),
-            FAQItem(
-                title = org.fossify.commons.R.string.faq_9_title_commons,
-                text = org.fossify.commons.R.string.faq_9_text_commons
             )
         )
-
-        if (resources.getBoolean(org.fossify.commons.R.bool.is_google_play_build)) {
-            faqItems.add(
-                FAQItem(
-                    title = org.fossify.commons.R.string.faq_2_title_commons,
-                    text = org.fossify.commons.R.string.faq_2_text_commons
-                )
-            )
-            faqItems.add(
-                FAQItem(
-                    title = org.fossify.commons.R.string.faq_6_title_commons,
-                    text = org.fossify.commons.R.string.faq_6_text_commons
-                )
-            )
-        }
 
         startAboutActivity(
             appNameId = R.string.app_name,

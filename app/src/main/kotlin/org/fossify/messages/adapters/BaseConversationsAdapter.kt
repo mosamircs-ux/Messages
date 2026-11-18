@@ -26,6 +26,7 @@ import org.fossify.messages.activities.SimpleActivity
 import org.fossify.messages.databinding.ItemConversationBinding
 import org.fossify.messages.extensions.config
 import org.fossify.messages.extensions.getAllDrafts
+import org.fossify.messages.helpers.PulseThemeHelper
 import org.fossify.messages.models.Conversation
 
 @Suppress("LeakingThis")
@@ -142,7 +143,7 @@ abstract class BaseConversationsAdapter(
 
     private fun setupView(view: View, conversation: Conversation) {
         ItemConversationBinding.bind(view).apply {
-            root.setupViewBackground(activity)
+            conversationFrame.background = PulseThemeHelper.createConversationCardDrawable(activity, properPrimaryColor)
             val smsDraft = drafts[conversation.threadId]
             draftIndicator.beVisibleIf(!smsDraft.isNullOrEmpty())
             draftIndicator.setTextColor(properPrimaryColor)

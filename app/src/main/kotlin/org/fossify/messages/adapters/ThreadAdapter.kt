@@ -77,6 +77,7 @@ import org.fossify.messages.helpers.THREAD_DATE_TIME
 import org.fossify.messages.helpers.THREAD_RECEIVED_MESSAGE
 import org.fossify.messages.helpers.THREAD_SENT_MESSAGE
 import org.fossify.messages.helpers.THREAD_SENT_MESSAGE_ERROR
+import org.fossify.messages.helpers.PulseThemeHelper
 import org.fossify.messages.helpers.THREAD_SENT_MESSAGE_SENDING
 import org.fossify.messages.helpers.THREAD_SENT_MESSAGE_SENT
 import org.fossify.messages.helpers.generateStableId
@@ -431,7 +432,7 @@ class ThreadAdapter(
             }
 
             threadMessageBody.apply {
-                background = AppCompatResources.getDrawable(activity, R.drawable.item_received_background)
+                background = PulseThemeHelper.createReceivedBubbleDrawable(activity)
                 setTextColor(textColor)
                 setLinkTextColor(activity.getProperPrimaryColor())
             }
